@@ -21,3 +21,17 @@ typeof something === (null || undefined || true)
 // loose
 typeof anotherThing == (null || undefined || true) 
 ```
+
+
+## Installation
+> npm i babel-plugin-transform-equal-chain
+
+## usage
+Add `transform-equal-chain` to your babel config 
+
+babel.config.json
+```
+{
+  "plugins": ["transform-equal-chain"]
+}
+```
