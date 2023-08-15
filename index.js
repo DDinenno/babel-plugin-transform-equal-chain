@@ -48,7 +48,7 @@ exports.default = function (babel) {
   };
 
   return {
-    name: "ast-transform",
+    name: "transform-equal-chain",
     visitor: {
       BinaryExpression: (path) => {
         if (path.node.operator === "==" || path.node.operator === "===") {
