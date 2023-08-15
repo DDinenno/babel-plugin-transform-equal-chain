@@ -1,5 +1,5 @@
 {
-  "name": "transform-equal-chain",
+  "name": "babel-plugin-transform-equal-chain",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
