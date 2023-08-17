@@ -33,12 +33,12 @@ exports.default = function (babel) {
 
   const buildLogicalChain = (path, expressions) => {
     if (expressions.length === 0) return [];
-
+    
     if (expressions.length === 1) {
       if (expressions[0].type === "BinaryExpression") {
         return buildNode(path, expressions[0]);
       }
-      return expressions[0];
+      return buildNode(path, expressions[0])
     }
 
     const left = buildNode(path, expressions[0]);
@@ -51,10 +51,10 @@ exports.default = function (babel) {
     name: "transform-equal-chain",
     visitor: {
       BinaryExpression: (path) => {
-        if (path.node.operator === "==" || path.node.operator === "===") {
+        if (["==", "==="].includes(path.node.operator)) {
           if (path.node.right.type === "LogicalExpression") {
             const expressions = recursivelyFind(path.node.right);
-
+            
             if (expressions.length === 2) {
               path.replaceWith(
                 t.logicalExpression(
