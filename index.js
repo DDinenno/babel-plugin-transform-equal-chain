@@ -27,21 +27,21 @@ exports.default = function (babel) {
     return expressions;
   };
 
-  const buildNode = (path, exp) => {
+  const buildEqualityExp = (path, exp) => {
     return t.binaryExpression(path.node.operator, path.node.left, exp);
   };
 
   const buildLogicalChain = (path, expressions) => {
     if (expressions.length === 0) return [];
-    
+
     if (expressions.length === 1) {
       if (expressions[0].type === "BinaryExpression") {
-        return buildNode(path, expressions[0]);
+        return buildEqualityExp(path, expressions[0]);
       }
-      return buildNode(path, expressions[0])
+      return buildEqualityExp(path, expressions[0]);
     }
 
-    const left = buildNode(path, expressions[0]);
+    const left = buildEqualityExp(path, expressions[0]);
     const right = buildLogicalChain(path, expressions.slice(1));
 
     return t.logicalExpression("||", left, right);
@@ -54,16 +54,8 @@ exports.default = function (babel) {
         if (["==", "==="].includes(path.node.operator)) {
           if (path.node.right.type === "LogicalExpression") {
             const expressions = recursivelyFind(path.node.right);
-            
-            if (expressions.length === 2) {
-              path.replaceWith(
-                t.logicalExpression(
-                  "||",
-                  buildNode(path, expressions[0]),
-                  buildNode(path, expressions[1])
-                )
-              );
-            } else if (expressions.length > 2) {
+
+            if (expressions.length > 1) {   
               path.replaceWith(buildLogicalChain(path, expressions));
             }
           }
