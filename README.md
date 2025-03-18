@@ -1,6 +1,6 @@
 # Babel Plugin Transform Equal Chain
 
-A basic transformer which simplifies multiple equal statements.
+A basic transformer which simplifies multiple equality statements.
 
 
 #### It takes something like this
@@ -8,12 +8,12 @@ A basic transformer which simplifies multiple equal statements.
 typeof something === "string" || typeof something === "number" || typeof something === null
 ```
 
-#### Which can be written like this, but outputs to the example above
+#### And reduces it to this
 ```
 typeof something === ("string" || "number" || null)
 ```
 
-#### It workes with both loose and strict equality
+#### It works with both loose and strict equality
 ```
 // strict
 typeof something === (null || undefined || true)
